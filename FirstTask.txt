@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+
+class Program {
+    static void Main(string[] args) {
+        Logic("din");
+        Logic("recede");
+        Logic("Success");
+        Logic("(( @");
+    }
+  public static void Logic(string input){
+	  
+        char[] output = new char[input.Length];
+        // char, charPos, charStatus
+        Dictionary<char, int[]> firstChars = new Dictionary<char, int[]>();
+		
+        for(int i = 0; i < input.Length; i++){
+          char c = Char.ToLower(input[i]);
+          if(!firstChars.ContainsKey(c)){
+            firstChars.Add(c, new int[]{i, 1});
+            output[i] = '(';
+          }
+          else{
+            firstChars[c][1] = 0;
+            output[i] = ')';
+          }
+        }
+		
+        foreach(int[] i in firstChars.Values){
+          if(i[1] == 0){
+            output[i[0]] = ')';
+          }
+        }
+		
+        Console.WriteLine($"\"{input}\" => \"{new string(output)}\"");
+  }
+}
